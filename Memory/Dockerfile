@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY ["Memory.csproj", "Memory/"]
+RUN dotnet restore "Memory/Memory.csproj"
+
+COPY . Memory/.
+RUN dotnet publish -c Release -o /app Memory/Memory.csproj 
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS publish
+WORKDIR /app
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "Memory.dll"]
