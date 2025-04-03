@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["Memory.csproj", "Memory/"]
+COPY ["Memory/Memory.csproj", "Memory/"]
 RUN dotnet restore "Memory/Memory.csproj"
 
-COPY . Memory/.
+COPY ./Memory/ Memory/.
 RUN dotnet publish -c Release -o /app Memory/Memory.csproj 
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS publish

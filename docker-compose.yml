@@ -8,30 +8,30 @@ services:
      - "15672:15672"
      - "15692:15692"
      
-  ALU:
+  alu:
     build:
-      context: ./ALU
-      dockerfile: ./ALU/Dockerfile
+      context: .
+      dockerfile: Dockerfile-ALU
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
-  Decoder:
+  decoder:
     build:
-      context: ./Decoder
-      dockerfile: ./Decoder/Dockerfile
+      context: .
+      dockerfile: Dockerfile-Decoder
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
-  Memory:
+  memory:
     build:
-      context: ./Memory
-      dockerfile: ./Memory/Dockerfile
+      context: .
+      dockerfile: Dockerfile-Memory
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
-  RegisterFile:
+  registerfile:
     build:
-      context: ./RegisterFile
-      dockerfile: ./RegisterFile/Dockerfile
+      context: .
+      dockerfile: Dockerfile-RegisterFile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["Decoder.csproj", "Decoder/"]
+COPY ["Decoder/Decoder.csproj", "Decoder/"]
 RUN dotnet restore "Decoder/Decoder.csproj"
 
-COPY . Decoder/.
+COPY ./Decoder/ Decoder/.
 RUN dotnet publish -c Release -o /app Decoder/Decoder.csproj 
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS publish

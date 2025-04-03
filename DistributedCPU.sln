@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decoder", "Decoder\Decoder.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALU", "ALU\ALU.csproj", "{AB16397F-DBFE-EB77-FEB4-5C9D273518B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISA", "ISA\ISA.csproj", "{98894016-C275-479B-A8D0-01647B61DC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{49806197-BF13-4DDA-8C0A-F167DC423A53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +36,14 @@ Global
 		{AB16397F-DBFE-EB77-FEB4-5C9D273518B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB16397F-DBFE-EB77-FEB4-5C9D273518B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB16397F-DBFE-EB77-FEB4-5C9D273518B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98894016-C275-479B-A8D0-01647B61DC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98894016-C275-479B-A8D0-01647B61DC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98894016-C275-479B-A8D0-01647B61DC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98894016-C275-479B-A8D0-01647B61DC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

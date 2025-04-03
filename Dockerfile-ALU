@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["ALU.csproj", "ALU/"]
+COPY ["ALU/ALU.csproj", "ALU/"]
 RUN dotnet restore "ALU/ALU.csproj"
 
-COPY . ALU/.
+COPY ./ALU/ ALU/.
 RUN dotnet publish -c Release -o /app ALU/ALU.csproj 
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS publish
