@@ -1,7 +1,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
+
+COPY ["ISA/ISA.csproj", "ISA/"]
+RUN dotnet restore "ISA/ISA.csproj"
+
 COPY ["Memory/Memory.csproj", "Memory/"]
 RUN dotnet restore "Memory/Memory.csproj"
+
+
+COPY ./ISA/ ISA/.
+RUN dotnet publish -c Release -o /app ISA/ISA.csproj 
 
 COPY ./Memory/ Memory/.
 RUN dotnet publish -c Release -o /app Memory/Memory.csproj 

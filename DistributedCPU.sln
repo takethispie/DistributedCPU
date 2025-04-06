@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISA", "ISA\ISA.csproj", "{9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{49806197-BF13-4DDA-8C0A-F167DC423A53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Counter", "Counter\Counter.csproj", "{CAF83749-5BE7-4A5A-B9BA-938F5E9B3467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49806197-BF13-4DDA-8C0A-F167DC423A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF83749-5BE7-4A5A-B9BA-938F5E9B3467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF83749-5BE7-4A5A-B9BA-938F5E9B3467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF83749-5BE7-4A5A-B9BA-938F5E9B3467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF83749-5BE7-4A5A-B9BA-938F5E9B3467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

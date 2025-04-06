@@ -34,3 +34,4 @@ IHostBuilder CreateHostBuilder(string[] args) =>
                 });
             });
         });
+

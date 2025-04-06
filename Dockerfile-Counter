@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY ["Counter/Counter.csproj", "Counter/"]
+RUN dotnet restore "Counter/Counter.csproj"
+
+COPY . Counter/.
+RUN dotnet publish -c Release -o /app Counter/Counter.csproj 
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS publish
+WORKDIR /app
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "Counter.dll"]

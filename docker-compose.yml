@@ -29,6 +29,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+  counter:
+    build:
+      context: .
+      dockerfile: Dockerfile-Counter
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
   registerfile:
     build:
       context: .

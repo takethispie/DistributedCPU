@@ -1,5 +1,5 @@
-namespace ISA.messages;
+using MassTransit;
 
-public class ToDecoder {
-    
-}
+namespace ISA.Messages;
+
+public record ToDecoder(Guid CorrelationId, string Instruction) : CorrelatedBy<Guid>;
