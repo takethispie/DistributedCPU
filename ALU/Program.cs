@@ -1,4 +1,5 @@
 using System.Reflection;
+using ALU.Services;
 using MassTransit;
 
 bool IsRunningInContainer() =>
@@ -10,6 +11,7 @@ await CreateHostBuilder(args).Build().RunAsync();
 IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureServices((hostContext, services) => {
+            services.AddSingleton<AluBufferService>();
             services.AddMassTransit(x => {
                 x.AddDelayedMessageScheduler();
 

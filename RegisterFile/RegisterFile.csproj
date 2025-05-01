@@ -20,4 +20,12 @@
     <PackageReference Include="serilog.sinks.console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.3.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ISA\ISA.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Consumers\" />
+  </ItemGroup>
 </Project>

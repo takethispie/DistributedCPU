@@ -26,4 +26,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ISA\ISA.csproj" />
+    </ItemGroup>
+
 </Project>

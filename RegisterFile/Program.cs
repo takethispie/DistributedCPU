@@ -1,5 +1,6 @@
 using System.Reflection;
 using MassTransit;
+using RegisterFile.Services;
 
 bool IsRunningInContainer() =>
     bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inContainer)
@@ -10,6 +11,7 @@ await CreateHostBuilder(args).Build().RunAsync();
 IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureServices((hostContext, services) => {
+            services.AddSingleton<DestinationBufferService>();
             services.AddMassTransit(x => {
                 x.AddDelayedMessageScheduler();
 

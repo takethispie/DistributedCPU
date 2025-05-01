@@ -1,31 +1,47 @@
-using System.Text.Json.Serialization;
+using System.Reflection;
+using ISA.Messages;
+using MassTransit;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
-var builder = WebApplication.CreateSlimBuilder(args);
+static bool IsRunningInContainer() =>
+    bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inContainer) &&
+    inContainer;
 
-builder.Services.ConfigureHttpJsonOptions(options => {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthorization();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddMassTransit(x => {
+    x.SetKebabCaseEndpointNameFormatter();
+    x.SetInMemorySagaRepositoryProvider();
+    x.UsingRabbitMq((context, cfg) => {
+        if (IsRunningInContainer())
+            cfg.Host("rabbitmq");
+        cfg.UseDelayedMessageScheduler();
+        cfg.ConfigureEndpoints(context);
+    });
 });
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+app.UseAuthorization();
 
-var sampleTodos = new Todo[] {
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-};
+var instructionApis = app.MapGroup("/instructions");
+instructionApis
+    .MapPost("/single/{instruction}",
+        async (string instruction, [FromServices] IPublishEndpoint endpoint) => {
+            await endpoint.Publish(new InstructionLoaded(Guid.NewGuid(), instruction));
+        })
+    .WithName("execute a single instruction");
 
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? Results.Ok(todo)
-        : Results.NotFound());
+var memoryApis = app.MapGroup("/memory");
+memoryApis.MapPost("/storeinstruction/{address}/{instruction}",
+    (string address, string instruction) => { return "null"; }).WithName("store instruction in memory");
+
+memoryApis.MapPost("/storedata/{address}/{data}", (string address, string data) => { return "null"; })
+    .WithName("store data in memory");
 
 app.Run();
-
-public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
-
-[JsonSerializable(typeof(Todo[]))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext { }

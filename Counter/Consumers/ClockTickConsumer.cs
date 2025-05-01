@@ -1,10 +1,9 @@
 using ISA.Messages;
 using MassTransit;
-using Memory.Services;
 
-namespace Memory.Consumers;
+namespace Counter.Consumers;
 
-public class ClockEventConsumer(MemoryService memoryService) : IConsumer<ClockFired>
+public class ClockTickConsumer : IConsumer<ClockFired>
 {
     public Task Consume(ConsumeContext<ClockFired> context)
     {

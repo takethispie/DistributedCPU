@@ -1,7 +1,7 @@
 namespace Memory.Services;
 
 public class MemoryService(int size) {
-    private string[] Content { get; init; } = new string[size];
+    private string[] Content { get; } = new string[size];
 
     public string Read(int adress) {
         if(adress > Content.Length) 
@@ -10,8 +10,8 @@ public class MemoryService(int size) {
     }
 
     public void Write(int adress, string content) {
-        if(adress > this.Content.Length) 
+        if(adress > Content.Length) 
             throw new ArgumentException("out of bound memory exception", nameof(adress));
-        this.Content[adress] = content;
+        Content[adress] = content;
     }
 }

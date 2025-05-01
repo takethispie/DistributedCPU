@@ -1,6 +1,6 @@
 namespace ISA.Data;
 
-public enum OperationTypes {
+public enum MemoryOperationTypes {
     Write,
     Read
 }
