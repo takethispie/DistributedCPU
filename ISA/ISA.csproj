@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MassTransit.Abstractions" Version="8.4.*" />
+    <PackageReference Include="MassTransit.Abstractions" Version="8.4.0" />
     <PackageReference Include="OneOf" Version="3.0.271" />
   </ItemGroup>
 

@@ -6,8 +6,7 @@ namespace ISA.Messages;
 public record AluInstructionPrepared(
     Guid CorrelationId, 
     InstructionOperation Op, 
-    Register OperandA, 
-    Register OperandB,
-    Constant Constant,
+    Constant OperandA, 
+    Constant OperandB,
     Register Dest
 ) : CorrelatedBy<Guid>;

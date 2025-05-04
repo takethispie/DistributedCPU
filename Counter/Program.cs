@@ -1,9 +1,16 @@
 using System.Reflection;
 using MassTransit;
+using Serilog;
 
 bool IsRunningInContainer() =>
     bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inContainer)
     && inContainer;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Debug)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
 
 await CreateHostBuilder(args).Build().RunAsync();
 
