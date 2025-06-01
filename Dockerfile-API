@@ -8,14 +8,19 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["API/API.csproj", "API/"]
+COPY ["ISA/ISA.csproj", "ISA/"]
+RUN dotnet restore "ISA/ISA.csproj"
 RUN dotnet restore "API/API.csproj"
-COPY ./API .
+COPY ./ISA/ ISA/.
+RUN dotnet publish -c $BUILD_CONFIGURATION -o /app ISA/ISA.csproj 
+
+COPY ./API ./API
 WORKDIR "/src/API"
 RUN dotnet build "API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "API.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
 FROM base AS final
 WORKDIR /app

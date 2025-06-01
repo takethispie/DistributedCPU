@@ -13,11 +13,10 @@ public class ClockEventConsumer(
 ) : IConsumer<ClockFired>
 {
     public Task Consume(ConsumeContext<ClockFired> context) {
-        var (dest, val) = destinationBufferService.Pull();
-        Log.Information(@$" value {val.Value} to be stored in ${dest.Index}");
-        registerService.Set(dest, val);
-        destinationBufferService.Clear();
+        StorePreviousOperationResult();
         var inst = loadingBufferService.Pull();
+        if(inst is null) return Task.CompletedTask;
+        Log.Information($"instruction {inst.Op} regs getting loaded");
         var regA = registerService.Get(inst.ReadA);
         var regB = registerService.Get(inst.ReadB);
         var toAlu = inst.Op switch {
@@ -32,7 +31,13 @@ public class ClockEventConsumer(
             _ => new AluInstructionPrepared(Guid.NewGuid(), inst.Op, regA, regB,  inst.Dest)
         };
         loadingBufferService.Clear();
-        context.Publish(toAlu);
-        return Task.CompletedTask;
+        return context.Publish(toAlu);
+    }
+
+    private void StorePreviousOperationResult() {
+        var (dest, val) = destinationBufferService.Pull();
+        Log.Information(@$" value {val.Value} to be stored in ${dest.Index}");
+        if(dest.Index > 0) registerService.Set(dest, val);
+        destinationBufferService.Clear();
     }
 }

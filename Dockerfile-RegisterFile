@@ -1,7 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["RegisterFile/RegisterFile.csproj", "RegisterFile/"]
+COPY ["ISA/ISA.csproj", "ISA/"]
+RUN dotnet restore "ISA/ISA.csproj"
 RUN dotnet restore "RegisterFile/RegisterFile.csproj"
+
+
+COPY ./ISA/ ISA/.
+RUN dotnet publish -c Release -o /app ISA/ISA.csproj
 
 COPY ./RegisterFile/ RegisterFile/.
 RUN dotnet publish -c Release -o /app RegisterFile/RegisterFile.csproj 

@@ -12,7 +12,7 @@ public class LoadingBufferService : IBufferService<ToRegisterFile> {
         _buffer = value;
     }
     
-    public ToRegisterFile Pull() => _buffer;
+    public ToRegisterFile? Pull() => _buffer;
     
     public void Clear() {
         _buffer = null;

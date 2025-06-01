@@ -1,7 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["ALU/ALU.csproj", "ALU/"]
+COPY ["ISA/ISA.csproj", "ISA/"]
+RUN dotnet restore "ISA/ISA.csproj"
 RUN dotnet restore "ALU/ALU.csproj"
+
+COPY ./ISA/ ISA/.
+RUN dotnet publish -c Release -o /app ISA/ISA.csproj 
 
 COPY ./ALU/ ALU/.
 RUN dotnet publish -c Release -o /app ALU/ALU.csproj 

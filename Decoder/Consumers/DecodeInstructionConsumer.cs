@@ -11,7 +11,7 @@ public class DecodeInstructionConsumer(DecoderService decoderService) : IConsume
 {
     public async Task Consume(ConsumeContext<InstructionLoaded> context)
     {
-        Log.Information("");
+        Log.Information($"starting decoding of {context.Message.Instruction}");
         var inst = decoderService.Decode(context.Message.Instruction) switch
         {
             AluInstruction { OperandB.IsT1: true } toAlu => new ToRegisterFile(

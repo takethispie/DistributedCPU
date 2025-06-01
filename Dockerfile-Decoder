@@ -1,7 +1,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["Decoder/Decoder.csproj", "Decoder/"]
+COPY ["ISA/ISA.csproj", "ISA/"]
+RUN dotnet restore "ISA/ISA.csproj"
 RUN dotnet restore "Decoder/Decoder.csproj"
+
+COPY ./ISA/ ISA/.
+RUN dotnet publish -c Release -o /app ISA/ISA.csproj 
 
 COPY ./Decoder/ Decoder/.
 RUN dotnet publish -c Release -o /app Decoder/Decoder.csproj 
