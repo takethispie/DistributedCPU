@@ -19,6 +19,8 @@ IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureServices((hostContext, services) => {
             services.AddSingleton<DestinationBufferService>();
+            services.AddSingleton<LoadingBufferService>();
+            services.AddSingleton<RegisterService>();
             services.AddMassTransit(x => {
                 x.AddDelayedMessageScheduler();
 

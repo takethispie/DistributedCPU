@@ -34,6 +34,13 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
+var globalApis = app.MapGroup("/global");
+globalApis
+    .MapGet("/clock/tick", async ([FromServices] IPublishEndpoint endpoint) => {
+        await endpoint.Publish(new ClockFired(Guid.NewGuid()));
+    })
+    .WithName("execute a single clock tick");
+
 var instructionApis = app.MapGroup("/instructions");
 instructionApis
     .MapPost("/single/{instruction}",

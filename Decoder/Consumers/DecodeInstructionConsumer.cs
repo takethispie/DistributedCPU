@@ -12,7 +12,7 @@ public class DecodeInstructionConsumer(DecoderService decoderService) : IConsume
     public async Task Consume(ConsumeContext<InstructionLoaded> context)
     {
         Log.Information($"starting decoding of {context.Message.Instruction}");
-        var inst = decoderService.Decode(context.Message.Instruction) switch
+        var inst = decoderService.Decode(context.Message.Instruction.AsSpan()) switch
         {
             AluInstruction { OperandB.IsT1: true } toAlu => new ToRegisterFile(
                 context.Message.CorrelationId,
@@ -30,6 +30,7 @@ public class DecodeInstructionConsumer(DecoderService decoderService) : IConsume
                 toAlu.Destination,
                 new Constant(0)
             ),
+            
             _ => throw new ArgumentOutOfRangeException()
         };
         Log.Information("Instruction decoded");

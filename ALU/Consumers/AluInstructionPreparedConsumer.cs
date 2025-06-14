@@ -20,6 +20,7 @@ public class AluInstructionPreparedConsumer : IConsumer<AluInstructionPrepared>
             InstructionOperation.Sub => new AluExecuted(Guid.NewGuid(), new Constant(operandA.Value - operandB.Value), dest),
             InstructionOperation.Div  => new AluExecuted(Guid.NewGuid(), new Constant(operandA.Value / operandB.Value), dest),
             InstructionOperation.Mul => new AluExecuted(Guid.NewGuid(), new Constant(operandA.Value * operandB.Value), dest),
+            InstructionOperation.Load or InstructionOperation.LUpper => new AluExecuted(Guid.NewGuid(), operandB, dest),
             _ => new AluExecuted(Guid.NewGuid(), new Constant(0), new Register(0)),
         };
 }

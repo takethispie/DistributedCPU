@@ -13,7 +13,11 @@ internal class AluInstruction : IInstruction {
 
     public AluInstruction(InstructionOperation instructionOperation, Register destination, Register operandA, Register operandB) {
         InstructionOperation = instructionOperation switch {
-            InstructionOperation.Add or InstructionOperation.Div or InstructionOperation.Mul or InstructionOperation.Sub=> instructionOperation,
+            InstructionOperation.Add 
+                or InstructionOperation.Div 
+                or InstructionOperation.Mul 
+                or InstructionOperation.Sub
+                or InstructionOperation.Nope => instructionOperation,
             _ => throw new IncorrectInstructionStructureException()
         };
         OperandA = operandA;
@@ -23,7 +27,10 @@ internal class AluInstruction : IInstruction {
     
     public AluInstruction(InstructionOperation instructionOperation, Register destination, Constant constant) {
         InstructionOperation = instructionOperation switch {
-            InstructionOperation.Add or InstructionOperation.Div or InstructionOperation.Mul or InstructionOperation.Sub=> instructionOperation,
+            InstructionOperation.Load 
+                or InstructionOperation.LUpper 
+                or InstructionOperation.Out 
+                or InstructionOperation.Nope => instructionOperation,
             _ => throw new IncorrectInstructionStructureException()
         };
         OperandA = new Register(0);
