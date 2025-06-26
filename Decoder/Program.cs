@@ -19,6 +19,7 @@ IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureServices((hostContext, services) => {
             services.AddSingleton<DecoderService>();
+            services.AddSingleton<InstructionTransitionerService>();
             services.AddMassTransit(x => {
                 x.AddDelayedMessageScheduler();
                 x.SetKebabCaseEndpointNameFormatter();

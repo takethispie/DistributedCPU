@@ -7,32 +7,16 @@ using Serilog;
 
 namespace Decoder.Consumers;
 
-public class DecodeInstructionConsumer(DecoderService decoderService) : IConsumer<InstructionLoaded>
+public class DecodeInstructionConsumer(
+    DecoderService decoderService, 
+    InstructionTransitionerService instructionTransitionerService
+) : IConsumer<InstructionLoaded>
 {
     public async Task Consume(ConsumeContext<InstructionLoaded> context)
     {
         Log.Information($"starting decoding of {context.Message.Instruction}");
-        var inst = decoderService.Decode(context.Message.Instruction.AsSpan()) switch
-        {
-            AluInstruction { OperandB.IsT1: true } toAlu => new ToRegisterFile(
-                context.Message.CorrelationId,
-                toAlu.InstructionOperation,
-                new Register(0),
-                new Register(0),
-                toAlu.Destination,
-                toAlu.OperandB.AsT1
-            ),
-            AluInstruction { OperandB.IsT0: true } toAlu => new ToRegisterFile(
-                context.Message.CorrelationId,
-                toAlu.InstructionOperation,
-                toAlu.OperandA,
-                toAlu.OperandB.AsT0,
-                toAlu.Destination,
-                new Constant(0)
-            ),
-            
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        var aluInst = decoderService.Decode(context.Message.Instruction.AsSpan());
+        var inst = instructionTransitionerService.FromAluToRegisterFile(aluInst, context.Message.CorrelationId);
         Log.Information("Instruction decoded");
         await context.Publish(inst);
     }

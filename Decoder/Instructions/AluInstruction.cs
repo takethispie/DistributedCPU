@@ -5,7 +5,7 @@ using OneOf;
 
 namespace Decoder.Instructions;
 
-internal class AluInstruction : IInstruction {
+public sealed class AluInstruction : IInstruction {
     public InstructionOperation InstructionOperation { get; }
     public Register OperandA { get; }
     public OneOf<Register, Constant> OperandB { get; }

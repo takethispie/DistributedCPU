@@ -5,7 +5,7 @@ using OneOf;
 
 namespace Decoder.Instructions;
 
-internal class MemoryInstruction : IInstruction {
+public sealed class MemoryInstruction : IInstruction {
     public InstructionOperation InstructionOperation { get; }
     public OneOf<Constant, Register> Source { get; private set; }
     public OneOf<Constant, Register> Destination { get; private set; }
